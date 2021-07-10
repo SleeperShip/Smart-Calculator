@@ -4,6 +4,9 @@ public class Main {
 
     public static void main(String[] args) {
         int sum = 0;
+        int term1 = 0;
+        int term2 = 0;
+        char op = ' ';
         Scanner scanner = new Scanner(System.in);
        
         while(true) {
@@ -36,23 +39,19 @@ public class Main {
            
             String expr = userInput.trim();
             expr = expr.replaceAll("\\s", "");
-            expr = simplifyPlusSymbols(expr); //1
-            System.out.println("1 " + expr);
-            expr = simplifyMinusSymbols(expr); //2
-            System.out.println("2 " + expr);
-            expr = simplifyNegatives(expr); //3
-            System.out.println("3 " + expr);
-            expr = simplifyPlusSymbols(expr); //4
-            System.out.println("4 " + expr);
-            expr = simplifyMinusSymbols(expr); //5
-            System.out.println("5 " + expr);
-            expr = simplifyNegatives(expr);
-           
-            System.out.println(expr.toString());
+            expr = simplifySymbols(expr);
+            String[] exprArray = expr.split("[+-/*]");
+            
+            for (int i = 0; i < exprArray.length; i++) {
+                System.out.print(exprArray[i] + " ");
+            }
+            //System.out.println(expr.toString());
+            
             /*
             try {
-                for (int i = 0; i < stringArray.length; i++) {
-                    sum += Integer.parseInt(stringArray[i]);
+                for (int i = 2; i < stringArray.length; i++) {
+                    term1 = Integer.parseInt(stringArray[i-2]);
+                    op = 
                 }
             } catch(NumberFormatException e) {
                 System.exit(0);
@@ -62,8 +61,17 @@ public class Main {
             sum = 0;
             */
            
-                       
         }
+    }
+    
+    private static String simplifySymbols(String localExpr) {
+            String newExpr = simplifyPlusSymbols(localExpr); 
+            newExpr = simplifyMinusSymbols(newExpr); 
+            newExpr = simplifyNegatives(newExpr); 
+            newExpr = simplifyPlusSymbols(newExpr); 
+            newExpr = simplifyMinusSymbols(newExpr); 
+            newExpr = simplifyNegatives(newExpr);
+            return newExpr;
     }
     
     private static String simplifyNegatives(String localExpr) {
