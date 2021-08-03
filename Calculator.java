@@ -44,8 +44,6 @@ public class Calculator {
         }
     }
     
-    
-    
     private int getAnswer(String[] numbers, int sum) {
         for (int i = 0; i < numbers.length; i++) {
                 sum += Integer.parseInt(numbers[i]);
