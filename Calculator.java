@@ -1,12 +1,11 @@
 import java.util.Scanner;
-import java.util.Stack;
 
-public class Main {
-
-    public static void main(String[] args) {
-        int sum = 0;
+public class Calculator {
+    
+    public void getInput() {
         Scanner scanner = new Scanner(System.in);
-       
+        int sum = 0;
+        
         while (true) {
             String userInput = scanner.nextLine();
             String[] stringArray = userInput.trim().split("\\s+");;
@@ -34,26 +33,31 @@ public class Main {
                 }
                 continue;
             }
-           
+            
             String expr = userInput.trim();
+            String[] numbers = getExpression(expr);
+            //Split among plus signs, with new simplifications
             
-            expr = getExpression(expr);
-            String[] numbers = expr.split("\\+");
-            //System.out.println("Split among plus signs, with new simplificatinos: " );
-            
-            for (int i = 0; i < numbers.length; i++) {
-                sum += Integer.parseInt(numbers[i]);
-            }
-            
+            sum = getAnswer(numbers, sum);
             System.out.println(sum);
             sum = 0;
         }
     }
     
-    public static String getExpression(String s) {
+    
+    
+    private int getAnswer(String[] numbers, int sum) {
+        for (int i = 0; i < numbers.length; i++) {
+                sum += Integer.parseInt(numbers[i]);
+            }
+        return sum;
+    }
+    
+    private String[] getExpression(String s) {
         return s.replaceAll("\\s", "")
                 .replaceAll("\\b-", "+-")
                 .replaceAll("\\+{2,}", "+")
-                .replaceAll("--", "");
+                .replaceAll("--", "")
+                .split("\\+");
     }
 }
