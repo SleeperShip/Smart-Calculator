@@ -51,25 +51,28 @@ public class Calculator {
             expr = getExpression(expr);
             String[] numbers = getValuesArray(expr);
             //Split among plus signs, with new simplifications
-            System.out.println(expr);
-            //sum = getAnswer(numbers, sum);
-            //System.out.println(sum);
-            sum = 0;
+            //System.out.println(expr);
             
-            validateInput(expr);
+            if (!validateInput(expr)) {
+                sum = getAnswer(numbers, sum);
+                System.out.println(sum);
+            } else {
+                System.out.println("Invalid expression");
+            }
+            sum = 0;
         }
     }
     
-    private void validateInput(String expr) {   //leave as void return type for now, possible boolean later
-        final Pattern noLetters = Pattern.compile(".*[a-zA-Z].*");
+    private boolean validateInput(String expr) {   //leave as void return type for now, possible boolean later
+        //final Pattern noLetters = Pattern.compile(".*[a-zA-Z].*");
         final Pattern incomplete = Pattern.compile("\\d+[+\\-*/]+");
         final Pattern noOp = Pattern.compile("\\d+\\s+\\d+");
         
-        System.out.println("Contains letters: " + noLetters.matcher(expr).matches());
-        System.out.println("Incomplete expression: " + incomplete.matcher(expr).matches());
-        System.out.println("Operator absent: " + noOp.matcher(expr).matches());
+        //System.out.println("Contains letters: " + noLetters.matcher(expr).matches());
+        //System.out.println("Incomplete expression: " + incomplete.matcher(expr).matches());
+        //System.out.println("Operator absent: " + noOp.matcher(expr).matches());
         
-        //return noLetters.matcher(expr).matches() && incomplete.matcher(expr).matches() && noOp.matcher(expr).matches();
+        return incomplete.matcher(expr).matches() && noOp.matcher(expr).matches();
     }
     
     private int getAnswer(String[] numbers, int sum) {
