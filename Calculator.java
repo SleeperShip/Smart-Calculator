@@ -26,37 +26,48 @@ public class Calculator {
                     System.out.println("The program calculates the sum of numbers");
                     continue;
                 }
+                
+                if (stringArray[0].charAt(0) == '/') {
+                    System.out.println("Unknown command");
+                    continue;
+                }
                
                 try {
-                    System.out.println(Integer.parseInt(stringArray[0]));
+                    if (stringArray[0].matches("[+]+\\d+")) {
+                        String positiveNumber = stringArray[0].replaceAll("\\+", "");
+                        System.out.println(Integer.parseInt(positiveNumber));
+                        continue;
+                    } else {
+                        System.out.println(Integer.parseInt(stringArray[0]));
+                    }
                 } catch(NumberFormatException e) {
-                    System.out.println("Invalid input. Integers only.");
+                    System.out.println("Invalid expression");
                     break;
                 }
                 continue;
             }
             
             String expr = userInput.trim();
-            System.out.println(expr);
-            String[] numbers = getExpression(expr);
+            expr = getExpression(expr);
+            String[] numbers = getValuesArray(expr);
             //Split among plus signs, with new simplifications
-            
-            sum = getAnswer(numbers, sum);
-            System.out.println(sum);
+            System.out.println(expr);
+            //sum = getAnswer(numbers, sum);
+            //System.out.println(sum);
             sum = 0;
             
-            //validateInput(expr);
+            validateInput(expr);
         }
     }
     
     private void validateInput(String expr) {   //leave as void return type for now, possible boolean later
         final Pattern noLetters = Pattern.compile(".*[a-zA-Z].*");
-        final Pattern incomplete = Pattern.compile("\\d+[\\+\\-\\*\\/]+");
+        final Pattern incomplete = Pattern.compile("\\d+[+\\-*/]+");
         final Pattern noOp = Pattern.compile("\\d+\\s+\\d+");
         
         System.out.println("Contains letters: " + noLetters.matcher(expr).matches());
         System.out.println("Incomplete expression: " + incomplete.matcher(expr).matches());
-        System.out.println("Operator present: " + noOp.matcher(expr).matches());
+        System.out.println("Operator absent: " + noOp.matcher(expr).matches());
         
         //return noLetters.matcher(expr).matches() && incomplete.matcher(expr).matches() && noOp.matcher(expr).matches();
     }
@@ -68,11 +79,18 @@ public class Calculator {
         return sum;
     }
     
-    private String[] getExpression(String s) {
+    private String getExpression(String s) {
+        return s.replaceAll("\\s{2,}", " ")
+                .replaceAll("\\+{2,}", "+")
+                .replaceAll("--", "");
+    }
+    
+    private String[] getValuesArray(String s) {
         return s.replaceAll("\\s", "")
                 .replaceAll("\\b-", "+-")
                 .replaceAll("\\+{2,}", "+")
                 .replaceAll("--", "")
                 .split("\\+");
     }
+    
 }
