@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Calculator {
     
@@ -35,13 +37,28 @@ public class Calculator {
             }
             
             String expr = userInput.trim();
+            System.out.println(expr);
             String[] numbers = getExpression(expr);
             //Split among plus signs, with new simplifications
             
             sum = getAnswer(numbers, sum);
             System.out.println(sum);
             sum = 0;
+            
+            //validateInput(expr);
         }
+    }
+    
+    private void validateInput(String expr) {   //leave as void return type for now, possible boolean later
+        final Pattern noLetters = Pattern.compile(".*[a-zA-Z].*");
+        final Pattern incomplete = Pattern.compile("\\d+[\\+\\-\\*\\/]+");
+        final Pattern noOp = Pattern.compile("\\d+\\s+\\d+");
+        
+        System.out.println("Contains letters: " + noLetters.matcher(expr).matches());
+        System.out.println("Incomplete expression: " + incomplete.matcher(expr).matches());
+        System.out.println("Operator present: " + noOp.matcher(expr).matches());
+        
+        //return noLetters.matcher(expr).matches() && incomplete.matcher(expr).matches() && noOp.matcher(expr).matches();
     }
     
     private int getAnswer(String[] numbers, int sum) {
