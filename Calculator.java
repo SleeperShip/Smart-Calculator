@@ -37,12 +37,15 @@ public class Calculator {
                         String positiveNumber = stringArray[0].replaceAll("\\+", "");
                         System.out.println(Integer.parseInt(positiveNumber));
                         continue;
+                    } else if (stringArray[0].matches("[-]{1,}\\d+")) { 
+                        String negativeNumber = stringArray[0].replaceAll("\\--", "");
+                        System.out.println(Integer.parseInt(negativeNumber));
                     } else {
                         System.out.println(Integer.parseInt(stringArray[0]));
                     }
                 } catch(NumberFormatException e) {
                     System.out.println("Invalid expression");
-                    break;
+                    continue;
                 }
                 continue;
             }
@@ -98,5 +101,5 @@ public class Calculator {
                 .replaceAll("\\+{2,}", "+")
                 .replaceAll("--", "")
                 .split("\\+");
-    }   
-}
+    }
+} 
