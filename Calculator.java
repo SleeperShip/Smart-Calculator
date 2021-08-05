@@ -51,15 +51,19 @@ public class Calculator {
             expr = getExpression(expr);
             String[] numbers = getValuesArray(expr);
             //Split among plus signs, with new simplifications
-            //System.out.println(expr);
+            System.out.println(expr);
+            //System.out.println(validateInput(expr));
             
             if (!validateInput(expr)) {
                 sum = getAnswer(numbers, sum);
                 System.out.println(sum);
+                sum = 0;
+                continue;
             } else {
                 System.out.println("Invalid expression");
+                sum = 0;
+                continue;
             }
-            sum = 0;
         }
     }
     
@@ -72,7 +76,7 @@ public class Calculator {
         //System.out.println("Incomplete expression: " + incomplete.matcher(expr).matches());
         //System.out.println("Operator absent: " + noOp.matcher(expr).matches());
         
-        return incomplete.matcher(expr).matches() && noOp.matcher(expr).matches();
+        return incomplete.matcher(expr).matches() || noOp.matcher(expr).matches();
     }
     
     private int getAnswer(String[] numbers, int sum) {
@@ -94,6 +98,5 @@ public class Calculator {
                 .replaceAll("\\+{2,}", "+")
                 .replaceAll("--", "")
                 .split("\\+");
-    }
-    
+    }   
 }
