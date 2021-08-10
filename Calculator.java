@@ -48,6 +48,13 @@ public class Calculator {
                     continue;
                 }
                 continue;
+            } else {
+                Pattern pattern = Pattern.compile("[A-Za-z]+[+\\-*/]*[A-Za-z]+");
+                Matcher matcher = pattern.matcher(userInput);
+                if (matcher.find()) {
+                    System.out.println("Invalid Expression");
+                    continue;
+                }
             }
             
             String expr = userInput.trim();
