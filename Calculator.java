@@ -58,13 +58,11 @@ public class Calculator {
             }
             
             String expr = userInput.trim();
-            expr = getExpression(expr);
+            String exprCopy = expr;
+            exprCopy = getExpression(expr);
             String[] numbers = getValuesArray(expr);
-            //Split among plus signs, with new simplifications
-            System.out.println(expr);
-            //System.out.println(validateInput(expr));
             
-            if (!validateInput(expr)) {
+            if (!validateInput(exprCopy)) {
                 sum = getAnswer(numbers, sum);
                 System.out.println(sum);
                 sum = 0;
